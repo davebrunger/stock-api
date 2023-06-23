@@ -7,13 +7,13 @@ public static class ObjectExtensions
     /// action of the Entity Framework context. DO NOT copy and use this method in actual code, it is for testing
     /// puposes ONLY.
     /// </summary>
-    public static void SetAtRuntime<TObject, TPropety>(this TObject obj, Expression<Func<TObject, TPropety>> getPropety, TPropety value)
+    public static void SetAtRuntime<TObject, TPropety>(this TObject obj, Expression<Func<TObject, TPropety>> getProperty, TPropety value)
     {
-        if (getPropety is not LambdaExpression lambda ||
+        if (getProperty is not LambdaExpression lambda ||
             lambda.Body is not MemberExpression member ||
             member.Member is not PropertyInfo property)
         {
-            throw new ArgumentException("getPropety must be a lambda expression that returns a property", nameof(getPropety));
+            throw new ArgumentException("getProperty must be a lambda expression that returns a property", nameof(getProperty));
         }
         property.SetValue(obj, value);
     }
