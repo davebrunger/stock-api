@@ -1,6 +1,4 @@
-﻿using Moq;
-
-namespace DB.LondonStockApi.Web.Tests.Conrtrollers;
+﻿namespace DB.LondonStockApi.Web.Tests.Conrtrollers;
 
 public class ExchangesControllerTests
 {
@@ -108,6 +106,7 @@ public class ExchangesControllerTests
         var cancellationToken = new CancellationToken();
         var repository = new Mock<ILondonStockApiRepository>(MockBehavior.Strict);
         var averages = Array.Empty<Average>().BuildMock();
+        var exchangeId = 3L;
 
         var exchangeToAdd = new ExchangeToAdd
         {
@@ -138,6 +137,7 @@ public class ExchangesControllerTests
             .InSequence(sequence)
             .Setup(r => r.SaveChangesAsync(cancellationToken))
             .Callback(() => {
+                exchange.SetAtRuntime(e => e.ExchangeId, exchangeId);
                 exchange.PriceInPounds.Should().Be(exchangeToAdd.PriceInPounds);
                 exchange.SharesExchanged.Should().Be(exchangeToAdd.SharesExchanged);
                 average.AveragePriceInPounds.Should().Be(exchangeToAdd.PriceInPounds);
@@ -150,6 +150,9 @@ public class ExchangesControllerTests
         var actual = (await controller.Post(exchangeToAdd, cancellationToken)) as CreatedAtActionResult;
 
         actual.Should().NotBeNull();
+        actual!.ActionName.Should().Be("Get");
+        actual!.RouteValues.Should().BeEquivalentTo(new Dictionary<string, object> { { "exchangeId", exchangeId } });
+        actual!.Value.Should().Be(exchange);
 
         repository.Verify(r => r.Add(It.Is<Exchange>(e => e.BrokerId == exchangeToAdd.BrokerId && e.TickerSymbol == exchangeToAdd.TickerSymbol)), Times.Once);
         repository.Verify(r => r.Averages, Times.Once);
@@ -162,6 +165,7 @@ public class ExchangesControllerTests
     {
         var cancellationToken = new CancellationToken();
         var repository = new Mock<ILondonStockApiRepository>(MockBehavior.Strict);
+        var exchangeId = 5L;
 
         var exchangeToAdd = new ExchangeToAdd
         {
@@ -196,6 +200,7 @@ public class ExchangesControllerTests
             .InSequence(sequence)
             .Setup(r => r.SaveChangesAsync(cancellationToken))
             .Callback(() => {
+                exchange.SetAtRuntime(e => e.ExchangeId, exchangeId);
                 exchange.PriceInPounds.Should().Be(exchangeToAdd.PriceInPounds);
                 exchange.SharesExchanged.Should().Be(exchangeToAdd.SharesExchanged);
                 average.AveragePriceInPounds.Should().Be(1.6875M);
@@ -208,6 +213,9 @@ public class ExchangesControllerTests
         var actual = (await controller.Post(exchangeToAdd, cancellationToken)) as CreatedAtActionResult;
 
         actual.Should().NotBeNull();
+        actual!.ActionName.Should().Be("Get");
+        actual!.RouteValues.Should().BeEquivalentTo(new Dictionary<string, object> { { "exchangeId", exchangeId } });
+        actual!.Value.Should().Be(exchange);
 
         repository.Verify(r => r.Add(It.Is<Exchange>(e => e.BrokerId == exchangeToAdd.BrokerId && e.TickerSymbol == exchangeToAdd.TickerSymbol)), Times.Once);
         repository.Verify(r => r.Averages, Times.Once);

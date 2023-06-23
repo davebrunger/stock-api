@@ -62,7 +62,7 @@ current recommendation from Microsoft for testing involving EFCore. Please see
 [here](https://learn.microsoft.com/en-us/ef/core/testing/choosing-a-testing-strategy) for more information.
 I have also included Swashbuckle to generate a simple Swagger UI that can be used for testing locally.
 Documentation comments are used to supplement the automatically generated UI. Unit tests are provided in NUnit
-and make use of FluentAssertions.
+and make use of FluentAssertions and MockQueryable.Moq.
 
 ### API Endpoints
 The following API endpoints were created to meet the specification:
