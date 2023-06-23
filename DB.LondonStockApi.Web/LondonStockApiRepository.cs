@@ -23,19 +23,6 @@ public class LondonStockApiRepository : ILondonStockApiRepository
         context.Averages.Add(average);
     }
 
-    public Task<Average[]> GetAverages(CancellationToken cancellationToken, params string[] tickerSymbols)
-    {
-        var filteredAverages = tickerSymbols.Length > 0
-            ? context.Averages.Where(a => tickerSymbols.Contains(a.TickerSymbol))
-            : context.Averages;
-        return filteredAverages.ToArrayAsync(cancellationToken);
-    }
-
-    public Task<Exchange?> GetExchange(long exchangeId, CancellationToken cancellationToken)
-    {
-        return context.Exchanges.SingleOrDefaultAsync(e => e.ExchangeId == exchangeId, cancellationToken);
-    }
-
     public Task SaveChangesAsync(CancellationToken cancellationToken)
     {
         return context.SaveChangesAsync(cancellationToken);
