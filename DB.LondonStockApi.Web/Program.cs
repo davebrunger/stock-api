@@ -8,7 +8,13 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<LondonStockApiContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+// Use AsScoped so each request gets its own repository and therefore its own dbContext
+builder.Services.AddScoped<ILondonStockApiRepository, LondonStockApiRepository>();
 
 var app = builder.Build();
 

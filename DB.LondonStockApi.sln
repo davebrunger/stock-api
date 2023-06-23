@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB.LondonStockApi.Web.Tests", "DB.LondonStockApi.Web.Tests\DB.LondonStockApi.Web.Tests.csproj", "{EE85B682-D89A-44D6-8BEA-9D78054D4E84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{DACE19A0-052F-4426-8745-5DAF69BDC655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DACE19A0-052F-4426-8745-5DAF69BDC655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DACE19A0-052F-4426-8745-5DAF69BDC655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE85B682-D89A-44D6-8BEA-9D78054D4E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE85B682-D89A-44D6-8BEA-9D78054D4E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE85B682-D89A-44D6-8BEA-9D78054D4E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE85B682-D89A-44D6-8BEA-9D78054D4E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
